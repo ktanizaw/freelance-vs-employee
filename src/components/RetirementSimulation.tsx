@@ -53,9 +53,10 @@ export function RetirementSimulation({
 }: RetirementSimulationProps) {
   const [useEstimate, setUseEstimate] = useState(true);
   const [directInput, setDirectInput] = useState(0);
-  const [baseSalary, setBaseSalary] = useState(Math.floor(annualSalary / 16));
-  const [serviceYears, setServiceYears] = useState(remainingYears);
   const [multiplier, setMultiplier] = useState(1.0);
+
+  const baseSalary = Math.floor(annualSalary / 16);
+  const serviceYears = remainingYears;
 
   const employeeRetirement = useMemo(() => {
     if (useEstimate) {
@@ -97,21 +98,16 @@ export function RetirementSimulation({
         <div className="mt-3 flex flex-col gap-3">
           {useEstimate ? (
             <>
-              <CurrencyInput
-                label="基本給（月額）"
-                value={baseSalary}
-                onChange={setBaseSalary}
-                step={10000}
-                tooltip="賞与を除いた月額基本給です。年収から概算する場合、賞与4ヶ月分を想定して年収÷16が目安です。"
-              />
-              <NumberInput
-                label="勤続年数"
-                value={serviceYears}
-                onChange={setServiceYears}
-                unit="年"
-                min={0}
-                max={50}
-              />
+              <div className="text-sm text-slate-600">
+                <span>基本給（月額）: </span>
+                <span className="font-mono font-semibold">{formatYen(baseSalary)}</span>
+                <span className="text-xs text-slate-400 ml-1">（年収÷16で自動計算）</span>
+              </div>
+              <div className="text-sm text-slate-600">
+                <span>勤続年数: </span>
+                <span className="font-mono font-semibold">{serviceYears}年</span>
+                <span className="text-xs text-slate-400 ml-1">（65歳 − 現在の年齢）</span>
+              </div>
               <NumberInput
                 label="支給率"
                 value={multiplier}
