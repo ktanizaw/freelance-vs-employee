@@ -11,12 +11,13 @@ interface EmployeePanelProps {
   input: EmployeeInput;
   result: EmployeeResult;
   updateField: <K extends keyof EmployeeInput>(field: K, value: EmployeeInput[K]) => void;
+  hideResults?: boolean;
 }
 
-export function EmployeePanel({ input, result, updateField }: EmployeePanelProps) {
+export function EmployeePanel({ input, result, updateField, hideResults }: EmployeePanelProps) {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-xl font-bold text-gray-900 border-b-2 border-green-500 pb-2 hidden md:block">
+      <h2 className="text-xl font-bold text-slate-800 border-b-2 border-blue-500 pb-2 hidden md:block">
         正社員
       </h2>
 
@@ -65,16 +66,19 @@ export function EmployeePanel({ input, result, updateField }: EmployeePanelProps
         />
       </div>
 
-      <SummaryBar
-        takeHomePay={result.takeHomePay}
-        effectiveTaxRate={result.effectiveTaxRate}
-        colorClass="bg-green-600"
-      />
-
-      <div>
-        <h3 className="text-sm font-semibold text-gray-500 mb-2">内訳</h3>
-        <BreakdownTable items={result.breakdownItems} />
-      </div>
+      {!hideResults && (
+        <>
+          <SummaryBar
+            takeHomePay={result.takeHomePay}
+            effectiveTaxRate={result.effectiveTaxRate}
+            colorClass="bg-blue-600"
+          />
+          <div>
+            <h3 className="text-sm font-semibold text-slate-500 mb-2">内訳</h3>
+            <BreakdownTable items={result.breakdownItems} highlightColor="bg-blue-600" />
+          </div>
+        </>
+      )}
     </div>
   );
 }

@@ -6,30 +6,31 @@ import { Tooltip } from "./Tooltip";
 
 interface BreakdownTableProps {
   items: BreakdownItem[];
+  highlightColor?: string;
 }
 
-export function BreakdownTable({ items }: BreakdownTableProps) {
+export function BreakdownTable({ items, highlightColor = "bg-blue-600" }: BreakdownTableProps) {
   return (
-    <div className="divide-y divide-gray-100">
-      {items.map((item) => (
+    <div className="divide-y divide-slate-100">
+      {items.map((item, index) => (
         <div
-          key={item.label}
+          key={`${index}-${item.label}`}
           className={`flex justify-between items-center py-2 px-1 ${
             item.isReference
-              ? "bg-amber-50 rounded-lg px-3 py-2 mt-3 border border-amber-200"
+              ? "bg-slate-50 rounded-lg px-3 py-2 mt-3 border border-slate-200"
               : item.isHighlight
-              ? "bg-blue-50 rounded-lg px-3 py-3 mt-2"
+              ? `${highlightColor} rounded-lg px-3 py-3 mt-2`
               : item.isSubtotal
               ? "font-semibold"
-              : "text-gray-600"
+              : "text-slate-600"
           }`}
         >
           <span
             className={`text-sm ${
               item.isReference
-                ? "text-amber-800"
+                ? "text-slate-600"
                 : item.isHighlight
-                ? "text-blue-900 text-base font-bold"
+                ? "text-white text-base font-bold"
                 : ""
             }`}
           >
@@ -39,11 +40,11 @@ export function BreakdownTable({ items }: BreakdownTableProps) {
           <span
             className={`font-mono text-sm ${
               item.isReference
-                ? "text-amber-800"
+                ? "text-slate-600"
                 : item.isHighlight
-                ? "text-blue-900 text-lg font-bold"
+                ? "text-white text-lg font-bold"
                 : item.amount < 0
-                ? "text-red-600"
+                ? "text-rose-500"
                 : ""
             }`}
           >

@@ -1,15 +1,18 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useEmployeeCalc } from "@/hooks/useEmployeeCalc";
 import { useFreelancerCalc } from "@/hooks/useFreelancerCalc";
 import { calculateFreelancer } from "@/lib/tax/freelancer";
 import { EmployeePanel } from "./EmployeePanel";
 import { FreelancerPanel } from "./FreelancerPanel";
 import { MiniComparisonBar } from "./MiniComparisonBar";
+import { SummaryBar } from "./SummaryBar";
+import { BreakdownTable } from "./BreakdownTable";
 import { PensionSimulation } from "./PensionSimulation";
 import { IdecoSimulation } from "./IdecoSimulation";
 import { RetirementSimulation } from "./RetirementSimulation";
+import { LifetimeSimulation } from "./LifetimeSimulation";
 import { QualitativeComparison } from "./QualitativeComparison";
 import {
   BASIC_PENSION_ANNUAL,
@@ -88,6 +91,27 @@ export function ComparisonView() {
   const hasAnyIdeco = employee.input.ideco > 0 || freelancer.input.ideco > 0;
   const [includePaidLeave, setIncludePaidLeave] = useState(false);
 
+  // 退職金の値をRetirementSimulationから受け取る
+  const [retirementValues, setRetirementValues] = useState({ employee: 0, freelancer: 0 });
+  const handleRetirementChange = useCallback((emp: number, fl: number) => {
+    setRetirementValues({ employee: emp, freelancer: fl });
+  }, []);
+
+  // 生涯収支シミュレーション用データ
+  const lifetimeData = useMemo(() => ({
+    age: employee.input.age,
+    employee: {
+      retirement: retirementValues.employee,
+      idecoFutureValue: idecoData.employee.idecoFutureValue,
+      pensionAnnualBenefit: pensionData.employee.annualBenefit,
+    },
+    freelancer: {
+      retirement: retirementValues.freelancer,
+      idecoFutureValue: idecoData.freelancer.idecoFutureValue,
+      pensionAnnualBenefit: pensionData.freelancer.annualBenefit,
+    },
+  }), [employee.input.age, retirementValues, idecoData, pensionData]);
+
   const ANNUAL_WORKING_DAYS = 245;
   const paidLeaveDays = employee.input.paidLeaveDays;
 
@@ -113,14 +137,14 @@ export function ComparisonView() {
           employeeTakeHome={employee.result.takeHomePay}
           freelancerTakeHome={freelancerResultWithPaidLeave.takeHomePay}
         />
-        <div className="flex rounded-lg bg-gray-200 p-1">
+        <div className="flex rounded-lg bg-slate-200 p-1">
           <button
             type="button"
             onClick={() => setActiveTab("employee")}
             className={`flex-1 rounded-md py-2 text-sm font-semibold transition-colors ${
               activeTab === "employee"
-                ? "bg-white text-gray-900 shadow"
-                : "text-gray-500"
+                ? "bg-white text-blue-600 shadow-sm"
+                : "text-slate-500"
             }`}
           >
             正社員
@@ -130,8 +154,8 @@ export function ComparisonView() {
             onClick={() => setActiveTab("freelancer")}
             className={`flex-1 rounded-md py-2 text-sm font-semibold transition-colors ${
               activeTab === "freelancer"
-                ? "bg-white text-gray-900 shadow"
-                : "text-gray-500"
+                ? "bg-white text-emerald-600 shadow-sm"
+                : "text-slate-500"
             }`}
           >
             個人事業主
@@ -158,22 +182,51 @@ export function ComparisonView() {
       </div>
 
       {/* デスクトップ: 2カラム */}
-      <div className="hidden md:grid md:grid-cols-2 gap-12">
-        <EmployeePanel
-          input={employee.input}
-          result={employee.result}
-          updateField={employee.updateField}
-        />
-        <FreelancerPanel
-          input={freelancer.input}
-          result={freelancerResultWithPaidLeave}
-          updateField={freelancer.updateField}
-          paidLeaveToggle={{
-            enabled: includePaidLeave,
-            onChange: setIncludePaidLeave,
-            days: paidLeaveDays,
-          }}
-        />
+      <div className="hidden md:block space-y-8">
+        {/* フォーム */}
+        <div className="grid grid-cols-2 gap-12">
+          <EmployeePanel
+            input={employee.input}
+            result={employee.result}
+            updateField={employee.updateField}
+            hideResults
+          />
+          <FreelancerPanel
+            input={freelancer.input}
+            result={freelancerResultWithPaidLeave}
+            updateField={freelancer.updateField}
+            paidLeaveToggle={{
+              enabled: includePaidLeave,
+              onChange: setIncludePaidLeave,
+              days: paidLeaveDays,
+            }}
+            hideResults
+          />
+        </div>
+        {/* 手取り額 横並び */}
+        <div className="grid grid-cols-2 gap-12">
+          <SummaryBar
+            takeHomePay={employee.result.takeHomePay}
+            effectiveTaxRate={employee.result.effectiveTaxRate}
+            colorClass="bg-blue-600"
+          />
+          <SummaryBar
+            takeHomePay={freelancerResultWithPaidLeave.takeHomePay}
+            effectiveTaxRate={freelancerResultWithPaidLeave.effectiveTaxRate}
+            colorClass="bg-emerald-600"
+          />
+        </div>
+        {/* 内訳 横並び */}
+        <div className="grid grid-cols-2 gap-12">
+          <div>
+            <h3 className="text-sm font-semibold text-slate-500 mb-2">内訳</h3>
+            <BreakdownTable items={employee.result.breakdownItems} highlightColor="bg-blue-600" />
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-slate-500 mb-2">内訳</h3>
+            <BreakdownTable items={freelancerResultWithPaidLeave.breakdownItems} highlightColor="bg-emerald-600" />
+          </div>
+        </div>
       </div>
 
       {/* 年金シミュレーション */}
@@ -193,7 +246,11 @@ export function ComparisonView() {
         age={employee.input.age}
         shoukiboMonthly={freelancer.input.shoukiboKigyouKyousai}
         annualSalary={employee.input.annualSalary}
+        onRetirementChange={handleRetirementChange}
       />
+
+      {/* 生涯収支シミュレーション */}
+      <LifetimeSimulation data={lifetimeData} />
 
       {/* その他の定性比較 */}
       <QualitativeComparison />

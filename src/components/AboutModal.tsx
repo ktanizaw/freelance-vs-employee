@@ -10,7 +10,7 @@ export function AboutButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="text-sm text-gray-500 border border-gray-300 rounded-lg px-3 py-1.5 hover:bg-gray-100 transition-colors"
+        className="text-sm text-slate-300 border border-slate-600 rounded-lg px-3 py-1.5 hover:bg-slate-700 transition-colors"
       >
         補足
       </button>

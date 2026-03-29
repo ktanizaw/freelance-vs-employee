@@ -17,12 +17,13 @@ interface FreelancerPanelProps {
     onChange: (v: boolean) => void;
     days: number;
   };
+  hideResults?: boolean;
 }
 
-export function FreelancerPanel({ input, result, updateField, paidLeaveToggle }: FreelancerPanelProps) {
+export function FreelancerPanel({ input, result, updateField, paidLeaveToggle, hideResults }: FreelancerPanelProps) {
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="text-xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 hidden md:block">
+      <h2 className="text-xl font-bold text-slate-800 border-b-2 border-emerald-500 pb-2 hidden md:block">
         個人事業主
       </h2>
 
@@ -101,16 +102,19 @@ export function FreelancerPanel({ input, result, updateField, paidLeaveToggle }:
         />
       )}
 
-      <SummaryBar
-        takeHomePay={result.takeHomePay}
-        effectiveTaxRate={result.effectiveTaxRate}
-        colorClass="bg-blue-600"
-      />
-
-      <div>
-        <h3 className="text-sm font-semibold text-gray-500 mb-2">内訳</h3>
-        <BreakdownTable items={result.breakdownItems} />
-      </div>
+      {!hideResults && (
+        <>
+          <SummaryBar
+            takeHomePay={result.takeHomePay}
+            effectiveTaxRate={result.effectiveTaxRate}
+            colorClass="bg-emerald-600"
+          />
+          <div>
+            <h3 className="text-sm font-semibold text-slate-500 mb-2">内訳</h3>
+            <BreakdownTable items={result.breakdownItems} highlightColor="bg-emerald-600" />
+          </div>
+        </>
+      )}
     </div>
   );
 }

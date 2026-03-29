@@ -10,7 +10,7 @@ export function Tooltip({ text }: TooltipProps) {
   const [show, setShow] = useState(false);
 
   return (
-    <span className="relative inline-flex items-center ml-1">
+    <span className="relative inline-flex items-center ml-1 w-4 h-4 shrink-0">
       <button
         type="button"
         className="inline-flex items-center justify-center w-4 h-4 text-[10px] font-bold text-gray-500 bg-white rounded-full border border-gray-400 hover:bg-gray-100 hover:text-gray-700 transition-colors"

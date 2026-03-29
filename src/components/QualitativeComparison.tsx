@@ -20,25 +20,21 @@ const COMPARISON_DATA: ComparisonRow[] = [
     category: "住宅手当",
     employee: "月1〜5万円程度（会社による）",
     freelancer: "なし",
-    tooltip: "会社が家賃の一部を補助する制度です。支給額や条件は会社によって異なり、制度自体がない会社もあります。",
   },
   {
     category: "傷病手当金",
     employee: "給与の2/3を最大1年半支給",
     freelancer: "なし",
-    tooltip: "業務外の病気やケガで働けなくなった場合の保障です。健康保険から支給されます。",
   },
   {
     category: "失業保険",
     employee: "給与の50〜80%を最大330日",
     freelancer: "なし",
-    tooltip: "雇用保険に基づく給付です。自己都合退職の場合は給付開始まで2〜3ヶ月の待機期間があります。",
   },
   {
     category: "育休・産休手当",
     employee: "産休: 給与の2/3、育休: 給与の50〜67%",
     freelancer: "国民年金の免除のみ",
-    tooltip: "正社員は健康保険・雇用保険から給付があります。個人事業主は出産手当金・育児休業給付金の対象外です。",
   },
   {
     category: "持株会",
@@ -50,20 +46,18 @@ const COMPARISON_DATA: ComparisonRow[] = [
     category: "税務・事務処理",
     employee: "会社が年末調整で対応",
     freelancer: "確定申告・帳簿管理を自分で行う",
-    tooltip: "個人事業主は毎年の確定申告、日々の帳簿記帳、請求書発行、消費税申告などを自分で行う必要があります。税理士に依頼する場合は年間10〜30万円程度の費用がかかります。",
   },
   {
     category: "労災保険",
     employee: "自動加入（全額会社負担）",
     freelancer: "特別加入（任意・自己負担）",
-    tooltip: "業務中や通勤中の事故・病気に対する保障です。正社員は自動で適用されますが、個人事業主は特別加入の手続きが必要です。",
   },
 ];
 
 export function QualitativeComparison() {
   return (
-    <div className="mt-4 bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6">
-      <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-4 flex items-center">
+    <div className="mt-4 bg-white border border-slate-200 border-l-4 border-l-slate-400 shadow-sm rounded-xl p-4 sm:p-6">
+      <h3 className="text-sm sm:text-base font-bold text-slate-800 mb-4 flex items-center">
         その他の比較
         <Tooltip text="金額に換算しにくい待遇面・制度面の違いです。" />
       </h3>
@@ -71,15 +65,15 @@ export function QualitativeComparison() {
       <div>
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="border-b border-gray-300">
-              <th className="text-left py-2 pr-2 sm:pr-4 text-gray-700 font-semibold" />
-              <th className="text-left py-2 px-1 sm:px-4 text-green-700 font-semibold">正社員</th>
-              <th className="text-left py-2 pl-1 sm:pl-4 text-blue-700 font-semibold">個人事業主</th>
+            <tr className="border-b border-slate-300">
+              <th className="text-left py-2 pr-2 sm:pr-4 text-slate-600 font-semibold" />
+              <th className="text-left py-2 px-1 sm:px-4 text-blue-600 font-semibold">正社員</th>
+              <th className="text-left py-2 pl-1 sm:pl-4 text-emerald-600 font-semibold">個人事業主</th>
             </tr>
           </thead>
-          <tbody className="text-gray-700">
+          <tbody className="text-slate-600">
             {COMPARISON_DATA.map((row) => (
-              <tr key={row.category} className="border-b border-gray-100">
+              <tr key={row.category} className="border-b border-slate-100">
                 <td className="py-2.5 pr-2 sm:pr-4 font-medium flex items-center">
                   {row.category}
                   {row.tooltip && <Tooltip text={row.tooltip} />}

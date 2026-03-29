@@ -31,12 +31,12 @@ export function IdecoSimulation({ data, idecoReturnRate, onIdecoReturnRateChange
   }
 
   return (
-    <div className="mt-4 bg-indigo-50 border border-indigo-200 rounded-xl p-4 sm:p-6">
-      <h3 className="text-sm sm:text-base font-bold text-indigo-900 mb-1 flex items-center">
+    <div className="mt-4 bg-white border border-slate-200 border-l-4 border-l-indigo-500 shadow-sm rounded-xl p-4 sm:p-6">
+      <h3 className="text-sm sm:text-base font-bold text-slate-800 mb-1 flex items-center">
         iDeCo 資産運用シミュレーション（参考）
         <Tooltip text="iDeCoは年金と異なり終身受給ではありません。運用した資産を一括または分割で受け取る仕組みです。受取時に退職所得控除や公的年金等控除の税制優遇があります。" />
       </h3>
-      <p className="text-xs text-indigo-700 mb-4">
+      <p className="text-xs text-slate-500 mb-4">
         65歳まで残り{remainingYears}年積み立てた場合
       </p>
 
@@ -56,19 +56,19 @@ export function IdecoSimulation({ data, idecoReturnRate, onIdecoReturnRateChange
       <div>
         <table className="w-full text-xs sm:text-sm">
           <thead>
-            <tr className="border-b border-indigo-300">
-              <th className="text-left py-2 pr-2 sm:pr-4 text-indigo-800 font-semibold" />
-              <th className="text-right py-2 px-1 sm:px-4 text-green-700 font-semibold">正社員</th>
-              <th className="text-right py-2 pl-1 sm:pl-4 text-blue-700 font-semibold">個人事業主</th>
+            <tr className="border-b border-slate-300">
+              <th className="text-left py-2 pr-2 sm:pr-4 text-slate-600 font-semibold" />
+              <th className="text-right py-2 px-1 sm:px-4 text-blue-600 font-semibold">正社員</th>
+              <th className="text-right py-2 pl-1 sm:pl-4 text-emerald-600 font-semibold">個人事業主</th>
             </tr>
           </thead>
           <tbody className="text-gray-700">
-            <tr className="border-b border-indigo-100">
+            <tr className="border-b border-slate-100">
               <td className="py-2 pr-2 sm:pr-4">年間積立額</td>
               <td className="text-right py-2 px-1 sm:px-4 font-mono">{formatCell(employee.idecoAnnual)}</td>
               <td className="text-right py-2 pl-1 sm:pl-4 font-mono">{formatCell(freelancer.idecoAnnual)}</td>
             </tr>
-            <tr className="border-b border-indigo-100">
+            <tr className="border-b border-slate-100">
               <td className="py-2 pr-2 sm:pr-4">積立元本（{remainingYears}年）</td>
               <td className="text-right py-2 px-1 sm:px-4 font-mono">{formatCell(employee.idecoTotal)}</td>
               <td className="text-right py-2 pl-1 sm:pl-4 font-mono">{formatCell(freelancer.idecoTotal)}</td>
@@ -78,10 +78,10 @@ export function IdecoSimulation({ data, idecoReturnRate, onIdecoReturnRateChange
                 65歳時点の資産
                 <Tooltip text={`毎月の積立額を年利${idecoReturnRate}%で${remainingYears}年間複利運用した場合の概算です。運用結果を保証するものではありません。`} />
               </td>
-              <td className="text-right py-2 px-1 sm:px-4 font-mono font-semibold text-green-700">
+              <td className="text-right py-2 px-1 sm:px-4 font-mono font-semibold text-blue-600">
                 {formatCell(employee.idecoFutureValue)}
               </td>
-              <td className="text-right py-2 pl-1 sm:pl-4 font-mono font-semibold text-blue-700">
+              <td className="text-right py-2 pl-1 sm:pl-4 font-mono font-semibold text-emerald-600">
                 {formatCell(freelancer.idecoFutureValue)}
               </td>
             </tr>

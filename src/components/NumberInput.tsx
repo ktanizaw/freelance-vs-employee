@@ -37,7 +37,7 @@ export function NumberInput({
           min={min}
           max={max}
           step={step}
-          className="w-full rounded-lg border border-gray-300 px-3 py-2 text-right font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          className="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-right font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
         {unit && (
           <span className="text-sm text-gray-500 whitespace-nowrap">{unit}</span>
