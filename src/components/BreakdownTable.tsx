@@ -14,8 +14,10 @@ export function BreakdownTable({ items }: BreakdownTableProps) {
       {items.map((item) => (
         <div
           key={item.label}
-          className={`flex justify-between py-2 px-1 ${
-            item.isHighlight
+          className={`flex justify-between items-center py-2 px-1 ${
+            item.isReference
+              ? "bg-amber-50 rounded-lg px-3 py-2 mt-3 border border-amber-200"
+              : item.isHighlight
               ? "bg-blue-50 rounded-lg px-3 py-3 mt-2"
               : item.isSubtotal
               ? "font-semibold"
@@ -24,7 +26,11 @@ export function BreakdownTable({ items }: BreakdownTableProps) {
         >
           <span
             className={`text-sm ${
-              item.isHighlight ? "text-blue-900 text-base font-bold" : ""
+              item.isReference
+                ? "text-amber-800"
+                : item.isHighlight
+                ? "text-blue-900 text-base font-bold"
+                : ""
             }`}
           >
             {item.label}
@@ -32,7 +38,9 @@ export function BreakdownTable({ items }: BreakdownTableProps) {
           </span>
           <span
             className={`font-mono text-sm ${
-              item.isHighlight
+              item.isReference
+                ? "text-amber-800"
+                : item.isHighlight
                 ? "text-blue-900 text-lg font-bold"
                 : item.amount < 0
                 ? "text-red-600"

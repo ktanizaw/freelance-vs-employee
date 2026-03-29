@@ -22,7 +22,7 @@ export function SummaryBar({
       </div>
       <div className="text-sm opacity-80 mt-1 flex items-center flex-wrap">
         <span>月額: {formatYen(Math.floor(takeHomePay / 12))} ／ 実効負担率: {formatPercent(effectiveTaxRate)}</span>
-        <Tooltip text="額面収入に対して、税金・社会保険料が占める割合です。正社員は年収、業務委託は年間売上が分母になります。この数値が低いほど手元に残る割合が大きいことを意味します。" />
+        <Tooltip text="額面収入に対して、税金・社会保険料が占める割合です。正社員は年収、個人事業主は年間売上が分母になります。この数値が低いほど手元に残る割合が大きいことを意味します。" />
       </div>
     </div>
   );

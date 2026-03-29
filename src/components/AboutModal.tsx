@@ -44,15 +44,11 @@ export function AboutButton() {
                 <ul className="list-disc list-inside text-gray-600 space-y-0.5">
                   <li>
                     <span className="font-medium">配偶者控除・扶養控除</span>
-                    ：正社員・フリーランス両方に同じ額が適用されるため、比較結果への影響は軽微です
+                    ：正社員・個人事業主両方に同じ額が適用されるため、比較結果への影響は軽微です
                   </li>
                   <li>
                     <span className="font-medium">65歳以上の制度変更</span>
                     ：後期高齢者医療制度、厚生年金資格喪失など。現役世代を想定しているため対象外です
-                  </li>
-                  <li>
-                    <span className="font-medium">有給休暇・雇用リスク</span>
-                    ：金額に換算できないため、今後の対応を予定しています
                   </li>
                 </ul>
               </section>

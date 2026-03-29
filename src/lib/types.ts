@@ -4,6 +4,8 @@ export interface EmployeeInput {
   annualSalary: number;
   age: number;
   healthInsuranceRate: number; // e.g. 5.0 means 5%
+  ideco: number; // monthly amount (0-23000)
+  paidLeaveDays: number; // 有給休暇日数
 }
 
 export type ConsumptionTaxMethod = "twenty-percent" | "simplified" | "standard";
@@ -26,6 +28,7 @@ export interface BreakdownItem {
   amount: number;
   isSubtotal?: boolean;
   isHighlight?: boolean;
+  isReference?: boolean;
   tooltip?: string;
 }
 

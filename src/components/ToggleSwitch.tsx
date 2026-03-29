@@ -12,7 +12,7 @@ interface ToggleSwitchProps {
 export function ToggleSwitch({ label, checked, onChange, tooltip }: ToggleSwitchProps) {
   return (
     <div className="flex items-center justify-between">
-      <span className="text-sm font-medium text-gray-700">
+      <span className="text-sm font-medium text-gray-700 flex items-center">
         {label}
         {tooltip && <Tooltip text={tooltip} />}
       </span>

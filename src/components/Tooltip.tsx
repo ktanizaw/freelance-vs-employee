@@ -23,7 +23,7 @@ export function Tooltip({ text }: TooltipProps) {
         ?
       </button>
       {show && (
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-64 px-3 py-2 text-xs text-white bg-gray-800 rounded-lg shadow-lg z-10 leading-relaxed">
+        <div className="fixed-tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-72 max-w-[90vw] px-3 py-2 text-xs font-normal text-white bg-gray-800 rounded-lg shadow-lg z-50 leading-relaxed break-words">
           {text}
           <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-800" />
         </div>

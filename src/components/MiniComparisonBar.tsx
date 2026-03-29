@@ -32,7 +32,7 @@ export function MiniComparisonBar({
           </div>
         </div>
         <div className="text-center flex-1">
-          <div className="text-xs text-gray-500">業務委託</div>
+          <div className="text-xs text-gray-500">個人事業主</div>
           <div className="text-base font-bold font-mono text-blue-700">
             {formatYen(freelancerTakeHome)}
           </div>

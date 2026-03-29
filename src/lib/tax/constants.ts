@@ -53,6 +53,10 @@ export const BLUE_RETURN_DEDUCTION = 650_000;
 export const BUSINESS_TAX_RATE = 0.05;
 export const BUSINESS_TAX_EXEMPTION = 2_900_000;
 
+// 年金受給額（簡易計算用）
+export const BASIC_PENSION_ANNUAL = 831_700; // 基礎年金満額（2025年度）
+export const EMPLOYEE_PENSION_MULTIPLIER = 5.481 / 1000; // 報酬比例部分の乗率（2003年4月以降）
+
 // 消費税（インボイス制度）
 export const CONSUMPTION_TAX_RATE = 0.10;
 export const TWENTY_PERCENT_SPECIAL_RATE = 0.20; // 2割特例

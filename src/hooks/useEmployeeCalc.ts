@@ -9,6 +9,8 @@ const DEFAULT_INPUT: EmployeeInput = {
   annualSalary: 6_000_000,
   age: 30,
   healthInsuranceRate: DEFAULT_HEALTH_INSURANCE_RATE,
+  ideco: 0,
+  paidLeaveDays: 10,
 };
 
 export function useEmployeeCalc() {

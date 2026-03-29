@@ -23,7 +23,7 @@ export function calcEmploymentIncomeDeduction(annualSalary: number): number {
 
 /** 正社員の手取り計算 */
 export function calculateEmployee(input: EmployeeInput): EmployeeResult {
-  const { annualSalary, age, healthInsuranceRate } = input;
+  const { annualSalary, age, healthInsuranceRate, ideco } = input;
 
   // 給与所得控除
   const employmentIncomeDeduction = calcEmploymentIncomeDeduction(annualSalary);
@@ -41,12 +41,15 @@ export function calculateEmployee(input: EmployeeInput): EmployeeResult {
   const socialInsuranceTotal =
     pension + healthInsurance + employmentInsurance + longTermCareInsurance;
 
+  // iDeCo（小規模企業共済等掛金控除）
+  const idecoAnnual = ideco * 12;
+
   // 課税所得（1,000円未満切り捨て）
   const taxableIncomeForIncomeTax = floorThousand(
-    floor0(employmentIncome - socialInsuranceTotal - BASIC_DEDUCTION_INCOME_TAX)
+    floor0(employmentIncome - socialInsuranceTotal - idecoAnnual - BASIC_DEDUCTION_INCOME_TAX)
   );
   const taxableIncomeForResidentTax = floorThousand(
-    floor0(employmentIncome - socialInsuranceTotal - BASIC_DEDUCTION_RESIDENT_TAX)
+    floor0(employmentIncome - socialInsuranceTotal - idecoAnnual - BASIC_DEDUCTION_RESIDENT_TAX)
   );
 
   // 税金
@@ -56,7 +59,7 @@ export function calculateEmployee(input: EmployeeInput): EmployeeResult {
 
   // 手取り
   const totalDeductions =
-    socialInsuranceTotal + incomeTax + reconstructionTax + residentTax;
+    socialInsuranceTotal + idecoAnnual + incomeTax + reconstructionTax + residentTax;
   const takeHomePay = annualSalary - totalDeductions;
   const effectiveTaxRate =
     annualSalary > 0 ? (totalDeductions / annualSalary) * 100 : 0;
@@ -66,13 +69,14 @@ export function calculateEmployee(input: EmployeeInput): EmployeeResult {
     { label: "年収（額面）", amount: annualSalary, isSubtotal: true },
     { label: "給与所得控除", amount: -employmentIncomeDeduction, tooltip: "正社員版の「経費」にあたる控除です。フリーランスのように実費を計上できない代わりに、年収に応じて国が一律で認める控除額が自動的に差し引かれます。" },
     { label: "給与所得", amount: employmentIncome, isSubtotal: true },
-    { label: "厚生年金保険料", amount: -pension },
+    { label: "厚生年金保険料", amount: -pension, tooltip: "厚生年金保険料には国民年金（基礎年金）分が含まれています。フリーランスは国民年金のみですが、会社員は追加の報酬比例部分があるため、将来の年金受給額が多くなります。" },
     { label: "健康保険料", amount: -healthInsurance },
     { label: "雇用保険料", amount: -employmentInsurance },
     ...(longTermCareInsurance > 0
       ? [{ label: "介護保険料", amount: -longTermCareInsurance }]
       : []),
     { label: "社会保険料 合計", amount: -socialInsuranceTotal, isSubtotal: true },
+    ...(idecoAnnual > 0 ? [{ label: "iDeCo", amount: -idecoAnnual }] : []),
     { label: "基礎控除", amount: -BASIC_DEDUCTION_INCOME_TAX },
     { label: "課税所得", amount: taxableIncomeForIncomeTax, isSubtotal: true },
     { label: "所得税", amount: -incomeTax },

@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "手取り比較シミュレーター | 正社員 vs 業務委託",
-  description: "正社員と業務委託（フリーランス）の手取り額を比較するシミュレーター",
+  title: "正社員 vs 個人事業主 Money Simulator",
+  description: "正社員と個人事業主の手取り・年金・退職金を比較するシミュレーター",
 };
 
 export default function RootLayout({
