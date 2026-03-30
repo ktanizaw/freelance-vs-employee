@@ -62,6 +62,10 @@ export function AboutButton() {
                     <span className="font-medium">65歳以上の制度変更</span>
                     ：後期高齢者医療制度、厚生年金資格喪失など。現役世代を想定しているため対象外です
                   </li>
+                  <li>
+                    <span className="font-medium">マイクロ法人化</span>
+                    ：個人事業主が法人を設立して社会保険や税金を最適化するケースは対象外です。法人化すると計算が大きく変わります
+                  </li>
                 </ul>
               </section>
 
