@@ -24,7 +24,7 @@ export function MiniComparisonBar({
           <div className="text-xs text-gray-400">差額</div>
           <div
             className={`text-sm font-bold font-mono ${
-              diff > 0 ? "text-emerald-600" : diff < 0 ? "text-blue-600" : "text-slate-500"
+              diff !== 0 ? "text-rose-600" : "text-slate-500"
             }`}
           >
             {diff > 0 ? "+" : ""}
