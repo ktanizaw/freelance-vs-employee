@@ -46,6 +46,7 @@ export function CurrencyInput({
         </button>
         <input
           type="number"
+          inputMode="numeric"
           value={focused && value === 0 ? "" : value}
           onChange={(e) => onChange(Number(e.target.value) || 0)}
           onFocus={() => setFocused(true)}

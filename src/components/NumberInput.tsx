@@ -51,6 +51,7 @@ export function NumberInput({
         </button>
         <input
           type="number"
+          inputMode={step < 1 ? "decimal" : "numeric"}
           value={focused && value === 0 ? "" : value}
           onChange={(e) => onChange(round(Number(e.target.value) || 0))}
           onFocus={() => setFocused(true)}
