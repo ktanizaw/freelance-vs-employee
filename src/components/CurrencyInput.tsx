@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Tooltip } from "./Tooltip";
 
 interface CurrencyInputProps {
@@ -23,6 +24,8 @@ export function CurrencyInput({
   step = 10000,
   tooltip,
 }: CurrencyInputProps) {
+  const [focused, setFocused] = useState(false);
+
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-700 flex items-center">
@@ -32,8 +35,15 @@ export function CurrencyInput({
       <div className="flex items-center gap-2">
         <input
           type="number"
-          value={value}
-          onChange={(e) => onChange(Number(e.target.value) || 0)}
+          value={focused && value === 0 ? "" : value}
+          onChange={(e) => {
+            let v = Number(e.target.value) || 0;
+            if (min !== undefined) v = Math.max(min, v);
+            if (max !== undefined) v = Math.min(max, v);
+            onChange(v);
+          }}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           min={min}
           max={max}
           step={step}

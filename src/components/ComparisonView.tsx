@@ -50,7 +50,7 @@ export function ComparisonView() {
 
     const basicPension = Math.floor(BASIC_PENSION_ANNUAL * contributionYears / 40);
     const salaryRelated = Math.floor(
-      employee.input.annualSalary / 12 * EMPLOYEE_PENSION_MULTIPLIER * contributionYears * 12
+      employee.input.annualSalary * EMPLOYEE_PENSION_MULTIPLIER * contributionYears
     );
 
     return {
