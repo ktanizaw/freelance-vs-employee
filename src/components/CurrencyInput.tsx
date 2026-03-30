@@ -32,24 +32,47 @@ export function CurrencyInput({
         {label}
         {tooltip && <Tooltip text={tooltip} />}
       </label>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1 sm:gap-2">
+        <button
+          type="button"
+          onClick={() => {
+            let v = value - step;
+            if (min !== undefined) v = Math.max(min, v);
+            onChange(v);
+          }}
+          className="sm:hidden shrink-0 w-9 h-9 rounded-lg border border-slate-300 bg-slate-50 text-slate-600 font-bold text-lg active:bg-slate-200"
+        >
+          −
+        </button>
         <input
           type="number"
           value={focused && value === 0 ? "" : value}
-          onChange={(e) => {
-            let v = Number(e.target.value) || 0;
+          onChange={(e) => onChange(Number(e.target.value) || 0)}
+          onFocus={() => setFocused(true)}
+          onBlur={() => {
+            setFocused(false);
+            let v = value;
             if (min !== undefined) v = Math.max(min, v);
             if (max !== undefined) v = Math.min(max, v);
-            onChange(v);
+            if (v !== value) onChange(v);
           }}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           min={min}
           max={max}
           step={step}
           className="w-full rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-right text-lg font-mono focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
-        <span className="text-sm text-gray-500 whitespace-nowrap">{unit}</span>
+        <button
+          type="button"
+          onClick={() => {
+            let v = value + step;
+            if (max !== undefined) v = Math.min(max, v);
+            onChange(v);
+          }}
+          className="sm:hidden shrink-0 w-9 h-9 rounded-lg border border-slate-300 bg-slate-50 text-slate-600 font-bold text-lg active:bg-slate-200"
+        >
+          +
+        </button>
+        <span className="text-sm text-gray-500 whitespace-nowrap hidden sm:inline">{unit}</span>
       </div>
     </div>
   );

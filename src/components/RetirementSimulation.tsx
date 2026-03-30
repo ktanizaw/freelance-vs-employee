@@ -88,44 +88,63 @@ export function RetirementSimulation({
 
       {/* 正社員の退職金入力 */}
       <div className="mb-4 p-3 sm:p-4 bg-slate-50 rounded-lg border border-slate-200">
-        <h4 className="text-sm font-semibold text-blue-600 mb-3">正社員の退職金</h4>
-        <ToggleSwitch
-          label="簡易推計を使う"
-          checked={useEstimate}
-          onChange={setUseEstimate}
-          tooltip="ONにすると基本給・勤続年数・支給率から概算します。OFFにすると見込み額を直接入力できます。正確な金額は勤務先の退職金規程を確認してください。"
-        />
-        <div className="mt-3 flex flex-col gap-3">
+        <div className="flex items-center gap-3 mb-3">
+          <h4 className="text-sm font-semibold text-blue-600">正社員の退職金</h4>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-slate-500 flex items-center">簡易推計<Tooltip text="ONにすると基本給・勤続年数・支給率から概算します。OFFにすると見込み額を直接入力できます。正確な金額は勤務先の退職金規程を確認してください。" /></span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={useEstimate}
+              onClick={() => setUseEstimate(!useEstimate)}
+              className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                useEstimate ? "bg-blue-500" : "bg-slate-300"
+              }`}
+            >
+              <span
+                className={`pointer-events-none inline-block h-4 w-4 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                  useEstimate ? "translate-x-4" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3">
           {useEstimate ? (
             <>
-              <div className="text-sm text-slate-600">
+              <div className="text-sm text-slate-600 flex items-center flex-wrap">
                 <span>基本給（月額）: </span>
                 <span className="font-mono font-semibold">{formatYen(baseSalary)}</span>
                 <span className="text-xs text-slate-400 ml-1">（年収÷16で自動計算）</span>
+                <Tooltip text="賞与4ヶ月分を想定し、年収を16（12ヶ月＋賞与4ヶ月）で割って基本給を概算しています。賞与の月数は会社により異なります。" />
               </div>
               <div className="text-sm text-slate-600">
                 <span>勤続年数: </span>
                 <span className="font-mono font-semibold">{serviceYears}年</span>
                 <span className="text-xs text-slate-400 ml-1">（65歳 − 現在の年齢）</span>
               </div>
-              <NumberInput
-                label="支給率"
-                value={multiplier}
-                onChange={setMultiplier}
-                unit="倍"
-                min={0}
-                max={3}
-                step={0.1}
-                tooltip="基本給×勤続年数に掛ける係数です。中小企業で0.5〜1.0倍、大企業で1.0〜2.0倍程度が目安です。会社の退職金規程によって異なります。"
-              />
+              <div className="max-w-48">
+                <NumberInput
+                  label="支給率"
+                  value={multiplier}
+                  onChange={setMultiplier}
+                  unit="倍"
+                  min={0}
+                  max={3}
+                  step={0.1}
+                  tooltip="基本給×勤続年数に掛ける係数です。中小企業で0.5〜1.0倍、大企業で1.0〜2.0倍程度が目安です。会社の退職金規程によって異なります。"
+                />
+              </div>
             </>
           ) : (
-            <CurrencyInput
-              label="退職金の見込み額"
-              value={directInput}
-              onChange={setDirectInput}
-              step={100000}
-            />
+            <div className="max-w-xs">
+              <CurrencyInput
+                label="退職金の見込み額"
+                value={directInput}
+                onChange={setDirectInput}
+                step={100000}
+              />
+            </div>
           )}
         </div>
       </div>
