@@ -12,7 +12,7 @@ export function AboutButton() {
         onClick={() => setOpen(true)}
         className="text-sm text-slate-300 border border-slate-600 rounded-lg px-3 py-1.5 hover:bg-slate-700 transition-colors"
       >
-        補足
+        About
       </button>
       {open && (
         <div
@@ -25,7 +25,7 @@ export function AboutButton() {
           >
             <div className="flex items-center justify-between p-5 border-b border-gray-200">
               <h2 className="text-lg font-bold text-gray-900">
-                補足
+                About
               </h2>
               <button
                 type="button"
@@ -37,6 +37,18 @@ export function AboutButton() {
               </button>
             </div>
             <div className="p-5 text-sm text-gray-700 leading-relaxed space-y-4">
+              <section>
+                <h3 className="font-semibold text-gray-900 mb-2">
+                  このツールについて
+                </h3>
+                <p className="text-gray-600">
+                  正社員と個人事業主の比較は、単年の手取りだけでは現実とかけ離れます。年金・退職金・iDeCoなど、長期的な資産形成まで含めて初めて正しい比較ができます。
+                </p>
+                <p className="text-gray-600 mt-2">
+                  このツールは<strong>単年の手取り比較</strong>と<strong>長期的な資産形成の比較</strong>の両方を可視化し、正社員として生きるか個人事業主として生きるかを冷静に判断するためのシミュレーターです。
+                </p>
+              </section>
+
               <section>
                 <h3 className="font-semibold text-gray-900 mb-1">
                   計算に含まれないもの
