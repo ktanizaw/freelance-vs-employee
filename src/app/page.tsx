@@ -18,6 +18,9 @@ export default function Home() {
       <main className="max-w-6xl mx-auto px-4 py-8">
         <ComparisonView />
       </main>
+      <footer className="border-t border-slate-200 py-4 text-center text-xs text-slate-400">
+        © 2026 Money Simulator | 計算結果は概算です。正確な税額は専門家にご確認ください。
+      </footer>
     </div>
   );
 }
